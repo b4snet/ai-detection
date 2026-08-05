@@ -1,12 +1,11 @@
 """Authorized Nepal identity directory matcher.
 
-Matches an uploaded image only against profiles explicitly enrolled in
-backend/sample_data/authorized_nepal_profiles.json. It does not scrape the
-internet or identify random people.
+Only matches uploaded images against profiles that were manually enrolled with
+consent. It does not scrape the internet, does not identify random people, and
+returns no fake/demo identities.
 """
 from __future__ import annotations
 
-import hashlib
 import json
 import math
 import time
@@ -18,30 +17,81 @@ from backend.config import settings
 
 ALLOWED = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 PROFILE_DB = settings.data / "authorized_nepal_profiles.json"
+REFERENCE_DIR = settings.data / "authorized_directory"
+REFERENCE_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def _read_json() -> List[Dict[str, Any]]:
+    if not PROFILE_DB.exists():
+        PROFILE_DB.write_text("[]", encoding="utf-8")
+    try:
+        data = json.loads(PROFILE_DB.read_text(encoding="utf-8"))
+        return data if isinstance(data, list) else []
+    except Exception:
+        return []
+
+
+def _write_json(profiles: List[Dict[str, Any]]) -> None:
+    PROFILE_DB.write_text(json.dumps(profiles, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 def load_profiles() -> List[Dict[str, Any]]:
-    if not PROFILE_DB.exists():
-        return []
-    return json.loads(PROFILE_DB.read_text(encoding="utf-8"))
+    return _read_json()
 
 
-def save_upload(file_bytes: bytes, filename: str) -> str:
+def _validate_image_name(filename: str) -> str:
     ext = Path(filename or "upload.jpg").suffix.lower()
     if ext not in ALLOWED:
         raise ValueError("Unsupported image type. Use jpg/png/webp/bmp.")
-    stored = f"directory_{int(time.time())}_{uuid.uuid4().hex[:8]}{ext}"
+    return ext
+
+
+def save_upload(file_bytes: bytes, filename: str) -> str:
+    ext = _validate_image_name(filename)
+    stored = f"directory_query_{int(time.time())}_{uuid.uuid4().hex[:8]}{ext}"
     dest = settings.uploads / stored
     dest.write_bytes(file_bytes)
     return stored
 
 
+def enroll_profile(profile: Dict[str, Any], image_bytes: bytes, filename: str) -> Dict[str, Any]:
+    ext = _validate_image_name(filename)
+    profile_id = f"np-{uuid.uuid4().hex[:10]}"
+    ref_name = f"{profile_id}{ext}"
+    (REFERENCE_DIR / ref_name).write_bytes(image_bytes)
+
+    socials = {
+        k: v.strip()
+        for k, v in (profile.get("public_socials") or {}).items()
+        if isinstance(v, str) and v.strip()
+    }
+    row = {
+        "id": profile_id,
+        "consent_status": "authorized",
+        "name": (profile.get("name") or "").strip(),
+        "city": (profile.get("city") or "").strip(),
+        "district": (profile.get("district") or "").strip(),
+        "province": (profile.get("province") or "").strip(),
+        "public_socials": socials,
+        "notes": (profile.get("notes") or "").strip(),
+        "reference_image": ref_name,
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+    if not row["name"]:
+        raise ValueError("Name is required.")
+
+    profiles = load_profiles()
+    profiles.append(row)
+    _write_json(profiles)
+    return row
+
+
 def _fingerprint(path: Path) -> List[float]:
-    """Small visual fingerprint. Uses Pillow if available; falls back to file hash."""
+    """Simple image fingerprint for an authorized-directory prototype."""
     try:
         from PIL import Image, ImageStat
 
-        img = Image.open(path).convert("RGB").resize((32, 32))
+        img = Image.open(path).convert("RGB").resize((48, 48))
         stat = ImageStat.Stat(img)
         means = [v / 255.0 for v in stat.mean]
         hist = img.histogram()
@@ -49,11 +99,10 @@ def _fingerprint(path: Path) -> List[float]:
         for channel in range(3):
             h = hist[channel * 256:(channel + 1) * 256]
             total = sum(h) or 1
-            buckets.extend(sum(h[i:i + 32]) / total for i in range(0, 256, 32))
+            buckets.extend(sum(h[i:i + 16]) / total for i in range(0, 256, 16))
         return means + buckets
-    except Exception:
-        digest = hashlib.sha256(path.read_bytes()).digest()[:16]
-        return [b / 255.0 for b in digest]
+    except Exception as exc:
+        raise ValueError(f"Could not process image: {exc}") from exc
 
 
 def _similarity(a: List[float], b: List[float]) -> float:
@@ -66,32 +115,33 @@ def _similarity(a: List[float], b: List[float]) -> float:
 
 def match_authorized(stored_upload: str) -> Dict[str, Any]:
     upload_path = settings.uploads / stored_upload
-    profiles = load_profiles()
+    profiles = [p for p in load_profiles() if p.get("reference_image")]
+    if not profiles:
+        return {
+            "scope": "Nepal authorized directory only",
+            "notice": "No enrolled profiles found. Enroll authorized profiles first.",
+            "uploaded_image": f"/uploads/{stored_upload}",
+            "matches": [],
+        }
+
     upload_fp = _fingerprint(upload_path)
     matches = []
-
     for profile in profiles:
-        ref = (profile.get("reference_image") or "").strip()
-        ref_path = settings.data / "authorized_directory" / ref if ref else None
-        if ref_path and ref_path.exists():
-            score = _similarity(upload_fp, _fingerprint(ref_path))
-            method = "authorized_reference_image"
-        else:
-            # Demo-only deterministic score so the UI works until real enrolled photos are added.
-            seed = hashlib.sha256((stored_upload + profile.get("id", "")).encode()).digest()[0]
-            score = 0.42 + (seed / 255.0) * 0.28
-            method = "demo_placeholder_no_reference_image"
+        ref_path = REFERENCE_DIR / profile["reference_image"]
+        if not ref_path.exists():
+            continue
+        score = _similarity(upload_fp, _fingerprint(ref_path))
         matches.append({
             "profile": profile,
             "confidence": round(score, 3),
-            "method": method,
+            "method": "authorized_reference_image",
             "verification": "AUTHORIZED DIRECTORY MATCH - HUMAN CONFIRMATION REQUIRED",
         })
 
     matches.sort(key=lambda m: m["confidence"], reverse=True)
     return {
         "scope": "Nepal authorized directory only",
-        "notice": "No internet scraping, no random face identification. Add consent-based profiles and reference images to make real matches.",
+        "notice": "Results come only from enrolled consent-based profiles. No fake/demo identities are generated.",
         "uploaded_image": f"/uploads/{stored_upload}",
         "matches": matches[:5],
     }

@@ -26,6 +26,12 @@ export const api = {
     fd.append('file', file)
     return request('/directory/match', { method: 'POST', body: fd })
   },
+  directoryProfiles: () => request('/directory/profiles'),
+  directoryEnroll: (payload) => {
+    const fd = new FormData()
+    Object.entries(payload).forEach(([key, value]) => fd.append(key, value || ''))
+    return request('/directory/enroll', { method: 'POST', body: fd })
+  },
 
   analysis: (id) => request(`/analysis/${id}`),
   analyses: () => request('/analysis/'),

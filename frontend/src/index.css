@@ -110,3 +110,11 @@ select {
 .btn-neon:hover {
   box-shadow: 0 0 22px rgba(0, 255, 136, 0.6);
 }
+
+.label {
+  @apply text-[10px] tracking-[0.25em] text-sentinel-muted uppercase mb-1.5;
+}
+
+.input {
+  @apply w-full bg-black/60 border border-sentinel-border px-4 py-3 text-sm text-sentinel-neon tracking-wider focus:border-sentinel-neon focus:shadow-neon outline-none placeholder:text-sentinel-muted;
+}
