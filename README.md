@@ -1,5 +1,7 @@
 # SENTINEL AI
 
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/b4snet/ai-detection)
+
 ## AI-Powered Open Source Intelligence & Threat Analysis Platform
 
 SENTINEL AI is a hackathon-grade intelligence **assistant** that uploads an image, runs a local
