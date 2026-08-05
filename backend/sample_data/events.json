@@ -1,0 +1,26 @@
+[
+  {
+    "date": "2024-03",
+    "title": "Northline harbour expansion announced",
+    "event_type": "logistics",
+    "detail": "FICTIONAL demo event - supply chain expansion in port district."
+  },
+  {
+    "date": "2024-11",
+    "title": "Trade registry listing indexed",
+    "event_type": "registry",
+    "detail": "FICTIONAL demo record - public business index mention."
+  },
+  {
+    "date": "2025-06",
+    "title": "Central Intermodal throughput rise",
+    "event_type": "economic",
+    "detail": "FICTIONAL demo report - freight volume increase."
+  },
+  {
+    "date": "2026-01",
+    "title": "Container scanning pilot guidance",
+    "event_type": "regulatory",
+    "detail": "FICTIONAL demo bulletin - port scanning policy guidance."
+  }
+]

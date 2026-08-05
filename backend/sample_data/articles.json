@@ -1,0 +1,46 @@
+[
+  {
+    "id": "art-1",
+    "title": "Regional logistics firm Northline expands harbour operations",
+    "source": "Simulated Public Affairs Wire (DEMO)",
+    "url": "https://example.org/news/demo/2024-northline-harbour",
+    "source_type": "news",
+    "published_at": "2024-03-14",
+    "snippet": "Northline Logistics announced new harbour handling capacity in the port district. Analysts note increased traffic volumes across the eastern corridor.",
+    "entities": ["Northline Logistics"],
+    "relevance": 0.82
+  },
+  {
+    "id": "art-2",
+    "title": "Public records index lists V. Vega at regional trade listings",
+    "source": "Simulated Business Registry (DEMO)",
+    "url": "https://example.org/registry/demo/v-vega",
+    "source_type": "public_db",
+    "published_at": "2024-11-02",
+    "snippet": "A public business-registry index references a listing by 'V. Vega' linked to a regional trade association. FICTIONAL synthetic record for pipeline demonstration.",
+    "entities": ["V. Vega"],
+    "relevance": 0.71
+  },
+  {
+    "id": "art-3",
+    "title": "Rising freight volumes reported at Central Intermodal Terminal",
+    "source": "Simulated Freight Monitor (DEMO)",
+    "url": "https://example.org/news/demo/central-terminal-2025",
+    "source_type": "news",
+    "published_at": "2025-06-20",
+    "snippet": "Central Intermodal Terminal logged above-average throughput in Q2. Operators did not comment on specific clients.",
+    "entities": [],
+    "relevance": 0.55
+  },
+  {
+    "id": "art-4",
+    "title": "Authorities publish guidance on container scanning pilots",
+    "source": "Simulated Government Bulletin (DEMO)",
+    "url": "https://example.org/gov/demo/scanning-pilot",
+    "source_type": "government",
+    "published_at": "2026-01-15",
+    "snippet": "Regulatory bulletin outlines voluntary container scanning pilots at selected ports. FICTIONAL demonstration bulletin.",
+    "entities": [],
+    "relevance": 0.48
+  }
+]

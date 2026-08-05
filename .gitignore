@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Env
+.env
+
+# Node
+node_modules/
+frontend/dist/
+
+# Runtime data
+database/*.db
+backend/uploads/*
+!backend/uploads/.gitkeep
+reports/*.pdf
+reports/*.json
+backend/sample_data/.cache/
+
+# Models (downloaded weights)
+ai_models/*.pt
+
+# Logs
+*.log
+server.log
+server.err.log
+fe.log
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

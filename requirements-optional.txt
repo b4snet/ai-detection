@@ -1,0 +1,24 @@
+# ============================================================
+# SENTINEL AI - Optional AI / Vision / Vector Dependencies
+#
+# These unlock the FULL computer-vision + vector-search stack:
+#   * YOLO object detection (Ultralytics)
+#   * Real OCR (EasyOCR - downloads models on first use)
+#   * OpenCV face detection & image processing
+#   * Faiss / sklearn for semantic-ish vector search
+#
+# The platform runs fine WITHOUT these (simulation mode) but
+# for a live hackathon demo we recommend installing them.
+#
+# NOTE: On Python 3.14 the wheel availability of opencv /
+#       ultralytics / faiss may lag. Install from a Python 3.11-3.12
+#       environment for best compatibility.
+# ============================================================
+
+opencv-python-headless>=4.9.0.80
+ultralytics>=8.2.0
+easyocr>=1.7.1
+faiss-cpu>=1.8.0
+scikit-learn>=1.5.0
+torch>=2.2.0
+torchvision>=0.17.0

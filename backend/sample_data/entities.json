@@ -1,0 +1,20 @@
+[
+  {
+    "id": "demo-1",
+    "name": "Synthetic Subject 'CASE-VEGA'",
+    "is_fictional": true,
+    "entity_type": "person",
+    "aliases": ["V. Vega", "VV"],
+    "description": "FICTIONAL synthetic demo persona. Not a real person. Used ONLY to demonstrate the intelligence pipeline with simulated public mentions.",
+    "seed_terms": ["vega", "case vega", "vv"]
+  },
+  {
+    "id": "demo-2",
+    "name": "Synthetic Org 'Northline Logistics'",
+    "is_fictional": true,
+    "entity_type": "organization",
+    "aliases": ["Northline", "NLOG"],
+    "description": "FICTIONAL demo organization referenced in simulated articles to illustrate supply-chain OSINT linking.",
+    "seed_terms": ["northline"]
+  }
+]

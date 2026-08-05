@@ -1,0 +1,38 @@
+# ============================================================
+# SENTINEL AI - Core Runtime Dependencies
+# Installs the full stack needed for the backend + AI pipeline.
+# Heavier optional models (YOLO, EasyOCR, Faiss) live in
+# requirements-optional.txt so the core always installs fast.
+# ============================================================
+
+# --- Web framework -----------------------------------------------------------
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9
+
+# --- Config & validation -----------------------------------------------------
+pydantic>=2.7.0
+pydantic-settings>=2.2.0
+python-dotenv>=1.0.0
+
+# --- Database ----------------------------------------------------------------
+sqlalchemy>=2.0.30
+
+# --- Images / vision helpers -------------------------------------------------
+pillow>=10.3.0
+
+# --- Networking / OSINT ------------------------------------------------------
+requests>=2.32.0
+feedparser>=6.0.11
+
+# --- Knowledge graph ---------------------------------------------------------
+networkx>=3.3
+
+# --- Numerics / vector search fallback ---------------------------------------
+numpy>=1.26.4
+
+# --- PDF report generation ---------------------------------------------------
+reportlab>=4.2.0
+
+# --- Async job background tasks ----------------------------------------------
+anyio>=4.3.0
