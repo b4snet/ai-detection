@@ -43,6 +43,14 @@ export default function Dashboard() {
 
       <StatusStrip />
 
+      {/* Offline / hosted preview notice */}
+      {!loading && !status && (
+        <div className="border border-sentinel-amber/50 bg-sentinel-amber/5 text-sentinel-amber p-3 text-center text-[10px] tracking-widest">
+          UI PREVIEW — BACKEND OFFLINE. THIS HOSTED LINK SHOWS THE INTERFACE ONLY. RUN LOCALLY
+          WITH <span className="font-bold">python run.py</span> AND OPEN http://localhost:5173 FOR THE FULL PIPELINE.
+        </div>
+      )}
+
       {/* Quick actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link to="/scan" className="btn-neon text-center py-4 text-sm">

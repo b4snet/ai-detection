@@ -19,6 +19,18 @@ IMAGE INPUT ─▶ COMPUTER VISION ─▶ FEATURE EXTRACTION ─▶ ENTITY RECOG
 
 ---
 
+## Live Demo
+
+> **http://localhost:5173** — run the full pipeline on your machine: `python run.py`
+> then open the web UI.
+
+> **Hosted UI preview:** https://b4snet.github.io/find-the-person/
+> (GitHub Pages build of the dashboard. The pipeline backend runs locally, so the hosted
+> link shows the interface with a "backend offline" notice — start `python run.py` to connect
+> it to live data.)
+
+---
+
 ## Feature Highlights
 
 | Module | What it does |
