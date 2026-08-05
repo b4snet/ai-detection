@@ -21,6 +21,12 @@ export const api = {
     return request('/analysis/upload', { method: 'POST', body: fd })
   },
 
+  directoryMatch: (file) => {
+    const fd = new FormData()
+    fd.append('file', file)
+    return request('/directory/match', { method: 'POST', body: fd })
+  },
+
   analysis: (id) => request(`/analysis/${id}`),
   analyses: () => request('/analysis/'),
   run: (id) => request(`/analysis/${id}/run`, { method: 'POST' }),

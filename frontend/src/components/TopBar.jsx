@@ -2,11 +2,9 @@ import { NavLink } from 'react-router-dom'
 import { useSentinel } from '../context/SentinelContext.jsx'
 
 const links = [
-  { to: '/', label: 'COMMAND', icon: '▤' },
-  { to: '/scan', label: 'UPLOAD', icon: '⇪' },
-  { to: '/search', label: 'SEARCH', icon: '⌕' },
-  { to: '/footprint', label: 'FOOTPRINT', icon: '⌁' },
-  { to: '/logs', label: 'SYSTEM LOG', icon: '≣' },
+  { to: '/', label: 'MATCHER', icon: '◎' },
+  { to: '/footprint', label: 'MANUAL AUDIT', icon: '⌁' },
+  { to: '/logs', label: 'LOG', icon: '≣' },
 ]
 
 function StatusDot({ online }) {
@@ -33,10 +31,10 @@ export default function TopBar() {
             </div>
             <div>
               <div className="font-extrabold tracking-[0.3em] text-sentinel-neon glow-text text-sm">
-                SENTINEL AI
+                NEPAL ID MATCHER
               </div>
               <div className="text-[9px] tracking-[0.35em] text-sentinel-muted">
-                INTELLIGENCE OPERATIONS CENTER
+                AUTHORIZED DIGITAL IDENTITY DIRECTORY
               </div>
             </div>
           </div>

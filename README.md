@@ -2,6 +2,12 @@
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/b4snet/ai-detection)
 
+**Run in browser:** click the **Deploy to Netlify** button above, log in, then press **Deploy**. Netlify will create your live `.netlify.app` link automatically.
+
+## Nepal Authorized Identity Matcher
+
+The home page is now a simple upload flow: upload an image and compare it against an authorized Nepal profile directory. Replace `backend/sample_data/authorized_nepal_profiles.json` with consent-based Nepal records and reference images for real matching.
+
 ## AI-Powered Open Source Intelligence & Threat Analysis Platform
 
 SENTINEL AI is a hackathon-grade intelligence **assistant** that uploads an image, runs a local
