@@ -5,6 +5,7 @@ const links = [
   { to: '/', label: 'COMMAND', icon: '▤' },
   { to: '/scan', label: 'UPLOAD', icon: '⇪' },
   { to: '/search', label: 'SEARCH', icon: '⌕' },
+  { to: '/footprint', label: 'FOOTPRINT', icon: '⌁' },
   { to: '/logs', label: 'SYSTEM LOG', icon: '≣' },
 ]
 

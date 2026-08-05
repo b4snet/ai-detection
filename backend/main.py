@@ -13,7 +13,7 @@ from backend.core.logging import log
 from backend.database.session import create_tables
 from backend.models.entities import Base, GraphEdge  # noqa: F401  (register models)
 
-from backend.api.routes import analysis, logs, reports, search, status
+from backend.api.routes import analysis, footprint, logs, reports, search, status
 
 app = FastAPI(
     title="SENTINEL AI",
@@ -36,6 +36,7 @@ app.add_middleware(
 app.include_router(status.router)
 app.include_router(analysis.router)
 app.include_router(search.router)
+app.include_router(footprint.router)
 app.include_router(logs.router)
 app.include_router(reports.router)
 

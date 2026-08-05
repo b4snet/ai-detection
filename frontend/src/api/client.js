@@ -30,6 +30,13 @@ export const api = {
   searchEntities: (q) =>
     request(`/search/entities?q=${encodeURIComponent(q)}`),
 
+  footprintAudit: (payload) =>
+    request('/footprint/audit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }),
+
   logs: (limit = 120) => request(`/logs/?limit=${limit}`),
 
   reportPdf: (id) => `${BASE}/reports/${id}/pdf`,

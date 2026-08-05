@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard.jsx'
 import UploadPage from './pages/UploadPage.jsx'
 import AnalysisPage from './pages/AnalysisPage.jsx'
 import SearchPage from './pages/SearchPage.jsx'
+import FootprintPage from './pages/FootprintPage.jsx'
 import LogsPage from './pages/LogsPage.jsx'
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/scan" element={<UploadPage />} />
           <Route path="/analysis/:id" element={<AnalysisPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/footprint" element={<FootprintPage />} />
           <Route path="/logs" element={<LogsPage />} />
           <Route path="*" element={<Dashboard />} />
         </Routes>
